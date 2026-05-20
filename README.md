@@ -125,30 +125,30 @@ Perfect for educational purposes, algorithm study, and practical record manageme
 │                   MAIN APPLICATION                      │
 ├─────────────────────────────────────────────────────────┤
 │                                                         │
-│  ┌────────────────────────────────────────────────┐    │
-│  │         INTERACTIVE CONSOLE INTERFACE          │    │
-│  │  • Main Menu  • Dashboard  • Pagination        │    │
-│  └────────────────────────────────────────────────┘    │
+│  ┌────────────────────────────────────────────────┐     │
+│  │         INTERACTIVE CONSOLE INTERFACE          │     │
+│  │  • Main Menu  • Dashboard  • Pagination        │     │
+│  └────────────────────────────────────────────────┘     │
 │                         │                               │
 │                ┌────────┼────────┐                      │
 │                ▼        ▼        ▼                      │
-│         ┌──────────┬──────────┬─────────┐              │
-│         │  CRUD   │ALGORITHMS│ANALYTICS│              │
-│         │Operations│          │         │              │
-│         └──────────┴──────────┴─────────┘              │
+│         ┌──────────┬──────────┬─────────┐               │
+│         │  CRUD   │ALGORITHMS│ANALYTICS│                │
+│         │Operations│          │         │               │
+│         └──────────┴──────────┴─────────┘               │
 │                         │                               │
-│          ┌──────────────┼──────────────┐               │
-│          ▼              ▼              ▼               │
-│    ┌─────────────┬────────────┬──────────────┐        │
-│    │   Sorting   │  Searching │  Statistics  │        │
-│    │  Algorithms │ Algorithms │  & Analysis  │        │
-│    └─────────────┴────────────┴──────────────┘        │
+│          ┌──────────────┼──────────────┐                │
+│          ▼              ▼              ▼                │
+│    ┌─────────────┬────────────┬──────────────┐          │
+│    │   Sorting   │  Searching │  Statistics  │          │
+│    │  Algorithms │ Algorithms │  & Analysis  │          │
+│    └─────────────┴────────────┴──────────────┘          │
 │                                                         │
-│  ┌────────────────────────────────────────────────┐    │
-│  │    DATA STRUCTURES & STORAGE LAYER             │    │
-│  │  • Student Array  • AVL Tree  • File I/O      │    │
-│  │  • students.dat (Persistent Storage)          │    │
-│  └────────────────────────────────────────────────┘    │
+│  ┌────────────────────────────────────────────────┐     │
+│  │    DATA STRUCTURES & STORAGE LAYER             │     │
+│  │  • Student Array  • AVL Tree  • File I/O       │      │
+│  │  • students.dat (Persistent Storage)           │      │
+│  └────────────────────────────────────────────────┘     │
 │                                                         │
 └─────────────────────────────────────────────────────────┘
 ```
@@ -655,7 +655,7 @@ Choice (1-10): 1
 
 ┌───┬────────┬──────────────────┬──────┬────┬───┬──────────────┐
 │ # │ ID     │ Name             │ GPA  │ Gr │Age│ Major        │
-├───┼────────┼──────────────────┼──────┼────┼───┼──────��───────┤
+├───┼────────┼──────────────────┼──────┼────┼───┼──────��─── ─┤
 │ 1 │ 1001   │ Ali Ahmed        │ 4.00 │ A+ │23 │ Comp. Science│
 │ 2 │ 1008   │ Fatima Ali       │ 3.88 │ A  │21 │ Comp. Science│
 │ 3 │ 1015   │ Mohammed Hassan  │ 3.75 │ A  │22 │ Comp. Science│
@@ -901,7 +901,7 @@ SEARCH STUDENTS
   │ # │ ID     │ Name             │ GPA  │ Gr │Age│ Major        │
   ├───┼────────┼──────────────────┼──────┼────┼───┼──────────────┤
   │ 1 │ 1001   │ Ali Ahmed        │ 4.00 │ A+ │23 │ Comp. Science│
-  ��───┴────────┴──────────────────┴──────┴────┴───┴──────────────┘
+   ───┴────────┴──────────────────┴──────┴────┴───┴──────────────┘
 
   Comparisons: 1   Time: 0.0023 ms
 ```
@@ -1125,6 +1125,7 @@ v2.0 (Future)
 ### ⭐ If you found this project helpful, please give it a star!
 
 **Made with ❤️ by Code Hunters**
+**Under Supervision Of Eng.Sama & Eng.Yara**
 
 [↑ Back to Top](#-student-grade-management-system)
 
