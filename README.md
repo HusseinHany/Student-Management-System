@@ -13,6 +13,12 @@
 
 </div>
 
+<p align="center">
+  <img src="docs/demo.svg" width="760" alt="Recording of the program in a terminal: the main menu, loading 1,000 sample students, sorting them with quick sort, and the GPA statistics screen.">
+</p>
+
+<p align="center"><sub>Real output from the program: load 1,000 sample students, sort them with quick sort, then view the GPA statistics.</sub></p>
+
 ---
 
 ## 📋 Table of Contents

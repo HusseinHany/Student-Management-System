@@ -599,14 +599,14 @@ void statistics() {
     int mxCnt = 0; for (int i = 0; i < 5; i++) if (dist[i] > mxCnt) mxCnt = dist[i];
 
     sectionTitle("GPA STATISTICS");
-    boxTop(52);
+    boxTop(54);
     boxRow("  Total students  : ", to_string(n));
     boxRow("  Mean GPA        : ", dbl(mean) + " (" + letterGrade(mean) + ")", "\033[33m");
     boxRow("  Median GPA      : ", dbl(med) + " (" + letterGrade(med) + ")");
     boxRow("  Std Deviation   : ", dbl(stddev));
     boxRow("  Highest GPA     : ", dbl(mx) + " -- " + tmp[0].name, "\033[32m");
     boxRow("  Lowest GPA      : ", dbl(mn) + " -- " + tmp[n - 1].name, "\033[31m");
-    boxBot(52);
+    boxBot(54);
     delete[] tmp;
 
     sectionTitle("GPA DISTRIBUTION");
