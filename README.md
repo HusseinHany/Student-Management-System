@@ -196,8 +196,8 @@ Perfect for educational purposes, algorithm study, and practical record manageme
 
 #### 1. **Clone the Repository**
 ```bash
-git clone https://github.com/HusseinHany/Student-Managment-System.git
-cd Student-Managment-System
+git clone https://github.com/HusseinHany/Student-Management-System.git
+cd Student-Management-System
 ```
 
 #### 2. **Compile with G++ (Linux/macOS)**
@@ -219,7 +219,7 @@ student_system.exe            # Windows
 ### Project Structure
 
 ```
-Student-Managment-System/
+Student-Management-System/
 ├── Student Mangment System.cpp    # Main source file (~1400 lines)
 ├── students.dat                   # Data file (auto-created)
 ├── students_export.csv            # CSV export (auto-created)
