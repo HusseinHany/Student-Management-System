@@ -872,6 +872,26 @@ struct BenchResult { string alg, dt; int sz; double ms; long long cmp, sw; };
 BenchResult benchResults[300];
 int benchCount = 0;
 
+// rand() can stop at 32767 on some compilers, which is too small for the
+// 100,000-record runs, so two calls are combined.
+int randBelow(int m) {
+    unsigned r = ((unsigned)rand() << 15) ^ (unsigned)rand();
+    return (int)(r % (unsigned)m);
+}
+
+void shuffleStudents(Student arr[], int size) {
+    for (int i = size - 1; i > 0; i--) swapStudents(arr[i], arr[randBelow(i + 1)]);
+}
+
+// Runs one of the five algorithms; each sorts by its own field.
+void runAlgorithm(int ai, Student arr[], int s) {
+    if (ai == 0) bubbleSortGPA(arr, s);
+    else if (ai == 1) insertionSortID(arr, s);
+    else if (ai == 2) selectionSortAge(arr, s);
+    else if (ai == 3) mergeSortName(arr, 0, s - 1);
+    else quickSortGPA(arr, 0, s - 1);
+}
+
 void runBenchmark() {
     header("BENCHMARKING ENGINE", "5 algorithms x 4 sizes x 3 distributions = 60 runs");
     cout << "  Sizes : 50 | 1,000 | 10,000 | 100,000\n";
@@ -892,21 +912,30 @@ void runBenchmark() {
         for (int si = 0; si < 4; si++) {
             int s = sz[si];
             Student* base = new Student[s]; Student* arr = new Student[s];
-            if (di == 0) generateRandom(base, s);
-            else if (di == 1) generateNearlySorted(base, s);
-            else generateReverseSorted(base, s);
+            // Every algorithm sorts by a different field, so the input is
+            // arranged per algorithm: shuffled for "Random" (IDs included),
+            // and nearly sorted or reversed in that algorithm's own order.
+            generateRandom(base, s);
+            shuffleStudents(base, s);
 
             for (int ai = 0; ai < 5; ai++) {
                 bool skip = (s == 100000 && ai < 3);
-                copyArray(base, arr, s); resetCounters();
+                copyArray(base, arr, s);
+                if (!skip && di > 0) {
+                    runAlgorithm(ai, arr, s);          // sorted in this algorithm's order
+                    if (di == 1) {
+                        int d = s / 20;                // then disturb about 5% of it
+                        for (int k = 0; k < d; k++) swapStudents(arr[randBelow(s)], arr[randBelow(s)]);
+                    }
+                    else {
+                        for (int i = 0, j = s - 1; i < j; i++, j--) swapStudents(arr[i], arr[j]);
+                    }
+                }
+                resetCounters();
                 double ms = -1;
                 if (!skip) {
                     auto t0 = high_resolution_clock::now();
-                    if (ai == 0) bubbleSortGPA(arr, s);
-                    else if (ai == 1) insertionSortID(arr, s);
-                    else if (ai == 2) selectionSortAge(arr, s);
-                    else if (ai == 3) mergeSortName(arr, 0, s - 1);
-                    else quickSortGPA(arr, 0, s - 1);
+                    runAlgorithm(ai, arr, s);
                     ms = duration<double, milli>(high_resolution_clock::now() - t0).count();
                 }
                 BenchResult& r = benchResults[benchCount++];

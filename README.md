@@ -14,10 +14,10 @@
 </div>
 
 <p align="center">
-  <img src="docs/demo.svg" width="760" alt="Recording of the program in a terminal: the main menu, loading 1,000 sample students, sorting them with quick sort, and the GPA statistics screen.">
+  <img src="docs/demo.svg" width="760" alt="Recording of the program in a terminal: the main menu, loading 1,000 sample students, sorting them with quick sort, the GPA statistics screen, and the benchmark results.">
 </p>
 
-<p align="center"><sub>Real output from the program: load 1,000 sample students, sort them with quick sort, then view the GPA statistics.</sub></p>
+<p align="center"><sub>Real output from the program, shortened: load 1,000 sample students, sort them with quick sort, view the GPA statistics, then run the benchmark.</sub></p>
 
 ---
 
@@ -717,68 +717,74 @@ Total Runs: 60 (O(n²) algorithms skipped at n=100k)
 
 ### Sample Benchmark Output
 
+Real output from one run (Random data), compiled with `clang++ -O1` on an Apple Silicon Mac. Times will differ on your machine; the comparison counts will be close.
+
 ```
-FULL RESULTS TABLE
-═══════════════════════════════════════════════════════════════════════
+Algorithm        | Size     | Type           | Time(ms)    | Comparisons   | Swaps
+-----------------+----------+----------------+-------------+---------------+-----------
+Bubble Sort      | 50       | Random         | 0.012       | 1189          | 617
+Insertion Sort   | 50       | Random         | 0.004       | 645           | 599
+Selection Sort   | 50       | Random         | 0.007       | 1225          | 39
+Merge Sort       | 50       | Random         | 0.026       | 220           | 0
+Quick Sort       | 50       | Random         | 0.004       | 228           | 164
+Bubble Sort      | 1000     | Random         | 3.747       | 499329        | 233600
+Insertion Sort   | 1000     | Random         | 1.180       | 248154        | 247161
+Selection Sort   | 1000     | Random         | 2.816       | 499500        | 900
+Merge Sort       | 1000     | Random         | 0.378       | 8706          | 0
+Quick Sort       | 1000     | Random         | 0.123       | 9817          | 5450
+Bubble Sort      | 10000    | Random         | 284.055     | 49954814      | 24807198
+Insertion Sort   | 10000    | Random         | 66.348      | 25136212      | 25126218
+Selection Sort   | 10000    | Random         | 158.179     | 49995000      | 9034
+Merge Sort       | 10000    | Random         | 2.551       | 120454        | 0
+Quick Sort       | 10000    | Random         | 0.871       | 228447        | 64995
+Bubble Sort      | 100000   | Random         | SKIPPED     | SKIPPED       | SKIPPED
+Insertion Sort   | 100000   | Random         | SKIPPED     | SKIPPED       | SKIPPED
+Selection Sort   | 100000   | Random         | SKIPPED     | SKIPPED       | SKIPPED
+Merge Sort       | 100000   | Random         | 31.727      | 1536136       | 0
+Quick Sort       | 100000   | Random         | 15.907      | 13557431      | 727581
 
-Algorithm        | Size     | Type           | Time(ms)    | Comparisons
-─────────────────┼──────────┼────────────────┼─────────────┼────────────
-Bubble Sort      | 50       | Random         | 0.145 ms    | 1,034
-Bubble Sort      | 1000     | Random         | 245.89 ms   | 247,583
-Bubble Sort      | 10000    | Random         | SKIPPED     | SKIPPED
-Bubble Sort      | 100000   | Random         | SKIPPED     | SKIPPED
-
-Insertion Sort   | 50       | Random         | 0.098 ms    | 589
-Insertion Sort   | 1000     | Random         | 156.34 ms   | 248,901
-Insertion Sort   | 10000    | Random         | SKIPPED     | SKIPPED
-
-Merge Sort       | 50       | Random         | 0.025 ms    | 235
-Merge Sort       | 1000     | Random         | 1.23 ms     | 8,942
-Merge Sort       | 10000    | Random         | 15.67 ms    | 132,877
-Merge Sort       | 100000   | Random         | 185.42 ms   | 1,660,964
-
-Quick Sort       | 50       | Random         | 0.019 ms    | 198
-Quick Sort       | 1000     | Random         | 0.89 ms     | 7,123
-Quick Sort       | 10000    | Random         | 12.34 ms    | 118,456
-Quick Sort       | 100000   | Random         | 142.56 ms   | 1,543,210
-
-═══════════════════════════════════════════════════════════════════════
-
-VISUAL COMPARISON (n=10,000, Random data)
-
-Bubble Sort      [SKIPPED                        ] SKIPPED
-Insertion Sort   [SKIPPED                        ] SKIPPED
-Selection Sort   [SKIPPED                        ] SKIPPED
-Merge Sort       [##########....................] 15.67 ms
-Quick Sort       [########....................] 12.34 ms
+VISUAL COMPARISON  (n=10,000, Random data)
+--------------------------------------------
+Bubble Sort      [##########################] 284.055 ms
+Insertion Sort   [######....................] 66.348 ms
+Selection Sort   [##############............] 158.179 ms
+Merge Sort       [..........................] 2.551 ms
+Quick Sort       [..........................] 0.871 ms
 ```
+
+### How the input is prepared
+
+Each algorithm sorts by a different field (GPA, ID, age or name), so the input is arranged for each algorithm separately:
+
+- **Random:** the records are shuffled, so no field is in order, IDs included.
+- **Nearly Sorted:** the data is first sorted in that algorithm's own order, then about 5% of the records are swapped at random.
+- **Reverse Sorted:** the data is sorted in that algorithm's own order and then reversed.
 
 ### Benchmark Insights
 
+From the same run:
+
 ```
-Key Findings:
+1. The O(n^2) cliff
+   - n=1,000:    0.1 to 4 ms for every algorithm
+   - n=10,000:   O(n^2) sorts take 66 to 284 ms; merge and quick sort stay under 3 ms
+   - n=100,000:  O(n^2) sorts are skipped (about 90 s each); merge sort 32 ms, quick sort 16 ms
 
-1. O(n²) Scalability Cliff
-   ├─ n=50-1000:   O(n²) algorithms manageable
-   ├─ n=10,000:    O(n²) becomes very slow (~8s)
-   └─ n=100,000:   O(n²) skipped (>90s each)
+2. Comparisons tell the same story (n=10,000, Random)
+   - Bubble and selection sort:  about 50,000,000  (n^2 / 2)
+   - Insertion sort:             about 25,000,000  (n^2 / 4)
+   - Merge sort:                 120,454
+   - Quick sort:                 228,447
 
-2. O(n log n) Advantage
-   ├─ Merge Sort:  Consistent, predictable
-   ├─ Quick Sort:  Fastest average case (with pivot strategy)
-   └─ Speedup:     40-60x faster than O(n²) at n=100k
+3. Input order matters most for insertion sort (n=10,000)
+   - Random:          25,136,212 comparisons
+   - Nearly Sorted:    3,027,901 comparisons
+   - Reverse Sorted:  49,995,000 comparisons (its worst case)
 
-3. Data Distribution Impact
-   ├─ Random:      O(n²) worst case
-   ├─ Nearly Sorted: O(n²) benefit from optimization
-   └─ Reverse:     O(n²) worst case triggered
-
-4. Algorithm Characteristics
-   ├─ Bubble Sort:   Never use (purely educational)
-   ├─ Insertion:     Good for small/nearly-sorted
-   ├─ Selection:     Similar performance to Bubble
-   ├─ Merge Sort:    Use for guaranteed performance
-   └─ Quick Sort:    Use for average performance gain
+4. Quick sort and repeated values
+   - GPA has only 401 possible values, so large inputs contain many equal keys.
+     At n=100,000 quick sort still finishes in 16 to 31 ms, but it makes far more
+     comparisons than merge sort (13.6 million against 1.5 million on Random data).
 ```
 
 ---
