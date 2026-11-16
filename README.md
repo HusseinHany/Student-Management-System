@@ -126,62 +126,25 @@ Perfect for educational purposes, algorithm study, and practical record manageme
 
 ## 🏗️ System Architecture
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                   MAIN APPLICATION                      │
-├─────────────────────────────────────────────────────────┤
-│                                                         │
-│  ┌────────────────────────────────────────────────┐     │
-│  │         INTERACTIVE CONSOLE INTERFACE          │     │
-│  │  • Main Menu  • Dashboard  • Pagination        │     │
-│  └────────────────────────────────────────────────┘     │
-│                         │                               │
-│                ┌────────┼────────┐                      │
-│                ▼        ▼        ▼                      │
-│         ┌──────────┬──────────┬─────────┐               │
-│         │  CRUD   │ALGORITHMS│ANALYTICS│                │
-│         │Operations│          │         │               │
-│         └──────────┴──────────┴─────────┘               │
-│                         │                               │
-│          ┌──────────────┼──────────────┐                │
-│          ▼              ▼              ▼                │
-│    ┌─────────────┬────────────┬──────────────┐          │
-│    │   Sorting   │  Searching │  Statistics  │          │
-│    │  Algorithms │ Algorithms │  & Analysis  │          │
-│    └─────────────┴────────────┴──────────────┘          │
-│                                                         │
-│  ┌────────────────────────────────────────────────┐     │
-│  │    DATA STRUCTURES & STORAGE LAYER             │     │
-│  │  • Student Array  • AVL Tree  • File I/O       │      │
-│  │  • students.dat (Persistent Storage)           │      │
-│  └────────────────────────────────────────────────┘     │
-│                                                         │
-└─────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TB
+    M["Main menu and dashboard<br/>console interface with colours and pagination"] --> R["Records<br/>add · update · delete · display"]
+    M --> A["Algorithms<br/>5 sorting algorithms · linear and binary search"]
+    M --> N["Analytics<br/>statistics · top-K · filter by major · duplicate GPAs"]
+    M --> V["Advanced<br/>AVL tree · benchmark · sample data"]
+    R & A & N & V --> S[("Student array<br/>up to 100,000 records")]
+    V --> T["AVL tree<br/>indexed by student ID"]
+    S <--> F[("students.dat<br/>saved after every change")]
+    S --> C[("students_export.csv<br/>export from the dashboard")]
 ```
 
-### Data Flow Diagram
+### Adding a student
 
-```
-        ┌─────────────┐
-        │ Add Student │
-        └──────┬──────┘
-               │
-        ┌──────▼──────────┐
-        │  Validate Input  │
-        │ (ID, Name, GPA) │
-        └──────┬──────────┘
-               │
-        ┌──────▼──────┐
-        │  Add to Array│
-        └──────┬───────┘
-               │
-        ┌──────▼──────────────┐        ┌──────────┐
-        │  Save to File (.dat) │◄───────│ CSV Export
-        └──────┬──────────────┘        └──────────┘
-               │
-        ┌──────▼──────────────┐
-        │ Update UI/Display   │
-        └─────────────────────┘
+```mermaid
+flowchart LR
+    I["Enter ID, name, GPA,<br/>age and major"] --> V{"Valid?<br/>unique ID · letters-only name<br/>GPA 0.00–4.00"}
+    V -- no --> I
+    V -- yes --> A["Add to the array"] --> F["Save to students.dat"] --> U["Show the new record"]
 ```
 
 ---
@@ -226,11 +189,11 @@ student_system.exe            # Windows
 
 ```
 Student-Management-System/
-├── Student Mangment System.cpp    # Main source file (~1400 lines)
-├── students.dat                   # Data file (auto-created)
-├── students_export.csv            # CSV export (auto-created)
+├── Student Mangment System.cpp    # The whole program (about 1,200 lines)
+├── docs/demo.svg                  # Animated demo shown at the top of this README
 ├── README.md                      # This file
-└── .gitignore                     # Git ignore file
+├── students.dat                   # Created when you run it: saved records
+└── students_export.csv            # Created when you export from the dashboard
 ```
 
 ---
