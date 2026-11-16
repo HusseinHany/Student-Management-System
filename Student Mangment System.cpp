@@ -1002,11 +1002,10 @@ void dashboard() {
         int distArr[5] = { 0 };
         int majorCount[NUM_MAJORS] = { 0 };
         string topName = "N/A", topMajor = "N/A";
-        double topGpa = 0;
 
         for (int i = 0; i < n; i++) {
             sum += students[i].gpa;
-            if (students[i].gpa > mx) { mx = students[i].gpa; topName = students[i].name; topMajor = students[i].major; topGpa = students[i].gpa; }
+            if (students[i].gpa > mx) { mx = students[i].gpa; topName = students[i].name; topMajor = students[i].major; }
             if (students[i].gpa < mn) mn = students[i].gpa;
             double g = students[i].gpa;
             if (g < 1.0)distArr[0]++; else if (g < 2.0)distArr[1]++;
