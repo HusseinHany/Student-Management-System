@@ -1,5 +1,9 @@
 # 🎓 Student Grade Management System
 
+<p align="center">
+  <a href="https://husseinhany.github.io/#projects"><img src="docs/banner.svg" width="100%" alt="Student Management System: comparisons at 10,000 records. Bubble and selection sort 50 million, insertion 25 million, quick sort 0.23 million, merge sort 0.12 million."></a>
+</p>
+
 <div align="center">
 
 ![Language](https://img.shields.io/badge/Language-C%2B%2B11-blue?style=for-the-badge&logo=cplusplus)
